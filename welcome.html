@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcom</title>
+</head>
+<style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .welcome-box {
+            width: 500px;
+            padding: 40px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .username {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .developer {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        .status {
+            color: #777;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .logout-button {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 6px;
+            background-color: #222;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .logout-button:hover {
+            background-color: #444;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="welcome-box">
+
+        <h1>Welcome!</h1>
+
+        <p class="username" id="username"></p>
+
+        <p class="developer">
+            Created by <strong>Qianpeng Ma (Vincent)</strong>
+        </p>
+
+        <p class="status">
+            This website was created for educational and practice purposes.<br>
+            OpenAI was used as a reference for the page theme.<br>
+            This page is currently under development.<br>
+            More features will be added in the future.<br>
+        </p>
+
+        <button class="logout-button" onclick="logout()">Logout</button>
+
+    </div>
+
+
+    <script>
+
+        const currentUser = localStorage.getItem("currentUser");
+
+
+        if (!currentUser) {
+            window.location.href = "register.html";
+        }
+
+        else {
+            document.getElementById("username").innerHTML =
+                "Hello, " + currentUser;
+            }
+        function logout() {localStorage.removeItem("currentUser");window.location.href = "register.html";}
+</script>
+</body>
+</html>

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>register</title>
+<style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .account-box {
+            width: 380px;
+            padding: 32px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 25px;
+        }
+
+        .tab {
+            width: 50%;
+            padding: 10px;
+            border: none;
+            border-bottom: 2px solid #ddd;
+            background: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .tab.active {
+            border-bottom: 2px solid #222;
+            font-weight: bold;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #333;
+        }
+
+        .password-row {
+            position: relative;
+        }
+
+        .password-row input {
+            padding-right: 60px;
+        }
+
+        .show-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .main-button {
+            width: 100%;
+            padding: 11px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 6px;
+            background-color: #222;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .main-button:hover {
+            background-color: #444;
+        }
+
+        .message {
+            margin-top: 12px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .small-text {
+            margin-top: 18px;
+            text-align: center;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .small-text span {
+            color: #222;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="account-box">
+
+        <div class="tabs">
+            <button class="tab active" id="login-tab" onclick="showLogin()">Login</button>
+            <button class="tab" id="register-tab" onclick="showRegister()">Register</button>
+        </div>
+
+
+        <!-- Login -->
+
+        <div id="login-section">
+
+            <h2>Welcome Back</h2>
+
+            <form onsubmit="return loginUser()">
+
+                <div class="input-group">
+                    <label for="login-username">Username</label>
+                    <input type="text" id="login-username" placeholder="Enter your username" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="login-password">Password</label>
+
+                    <div class="password-row">
+                        <input type="password" id="login-password" placeholder="Enter your password" required>
+                        <button type="button" class="show-password" onclick="togglePassword('login-password', this)">Show</button>
+                    </div>
+                </div>
+
+                <button type="submit" class="main-button">Login</button>
+
+                <div id="login-message" class="message"></div>
+
+            </form>
+
+            <div class="small-text">
+                Don't have an account?
+                <span onclick="showRegister()">Register</span>
+            </div>
+
+        </div>
+
+
+        <!-- Register -->
+
+        <div id="register-section" class="hidden">
+
+            <h2>Create Account</h2>
+
+            <form onsubmit="return registerUser()">
+
+                <div class="input-group">
+                    <label for="register-username">Username</label>
+                    <input type="text" id="register-username" placeholder="Choose a username" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="register-password">Password</label>
+
+                    <div class="password-row">
+                        <input type="password" id="register-password" placeholder="Create a password" required>
+                        <button type="button" class="show-password" onclick="togglePassword('register-password', this)">Show</button>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" placeholder="Enter your password again" required>
+                </div>
+
+                <button type="submit" class="main-button">Create Account</button>
+
+                <div id="register-message" class="message"></div>
+
+            </form>
+
+            <div class="small-text">
+                Already have an account?
+                <span onclick="showLogin()">Login</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        function showLogin() {
+            document.getElementById("login-section").classList.remove("hidden");
+            document.getElementById("register-section").classList.add("hidden");
+
+            document.getElementById("login-tab").classList.add("active");
+            document.getElementById("register-tab").classList.remove("active");
+        }
+
+
+        function showRegister() {
+            document.getElementById("register-section").classList.remove("hidden");
+            document.getElementById("login-section").classList.add("hidden");
+
+            document.getElementById("register-tab").classList.add("active");
+            document.getElementById("login-tab").classList.remove("active");
+        }
+
+
+        function registerUser() {
+            const username = document.getElementById("register-username").value.trim();
+            const email = document.getElementById("register-email").value.trim();
+            const password = document.getElementById("register-password").value;
+            const confirmPassword = document.getElementById("confirm-password").value;
+
+            const message = document.getElementById("register-message");
+
+
+            if (username.length < 3) {
+                message.innerHTML = "Username must be at least 3 characters.";
+                message.style.color = "red";
+                return false;
+            }
+
+
+            if (password.length < 6) {
+                message.innerHTML = "Password must be at least 6 characters.";
+                message.style.color = "red";
+                return false;
+            }
+
+
+            if (password !== confirmPassword) {
+                message.innerHTML = "Passwords do not match.";
+                message.style.color = "red";
+                return false;
+            }
+
+
+            if (localStorage.getItem("user_" + username)) {
+                message.innerHTML = "This username already exists.";
+                message.style.color = "red";
+                return false;
+            }
+
+
+            const user = {
+                username: username,
+                email: email,
+                password: password
+            };
+
+
+            localStorage.setItem("user_" + username, JSON.stringify(user));
+
+
+            message.innerHTML = "Account created successfully.";
+            message.style.color = "green";
+
+
+            document.getElementById("login-username").value = username;
+
+
+            setTimeout(function() {
+                showLogin();
+
+                document.getElementById("register-username").value = "";
+                document.getElementById("register-email").value = "";
+                document.getElementById("register-password").value = "";
+                document.getElementById("confirm-password").value = "";
+
+                document.getElementById("register-message").innerHTML = "";
+            }, 800);
+
+
+            return false;
+        }
+
+        function loginUser() {
+            const username = document.getElementById("login-username").value.trim();
+            const password = document.getElementById("login-password").value;
+
+            const message = document.getElementById("login-message");
+
+            const savedUser = localStorage.getItem("user_" + username);
+
+
+            if (!savedUser) {
+                message.innerHTML = "Account not found.";
+                message.style.color = "red";
+                return false;
+            }
+
+            const user = JSON.parse(savedUser);
+
+            if (user.password !== password) {
+                message.innerHTML = "Incorrect password.";
+                message.style.color = "red";
+                return false;
+            }
+
+            localStorage.setItem("currentUser", username);
+
+
+            message.innerHTML = "Login successful.";
+            message.style.color = "green";
+
+            setTimeout(function() {
+                window.location.href = "welcome.html";
+            }, 700);
+            return false;
+        }
+
+        function togglePassword(inputId, button) {
+            const input = document.getElementById(inputId);
+            if (input.type === "password") {
+                input.type = "text";
+                button.innerHTML = "Hide";
+            }
+
+            else {
+                input.type = "password";
+                button.innerHTML = "Show";
+            }
+        }
+
+    </script>
+</body>
+</html>
